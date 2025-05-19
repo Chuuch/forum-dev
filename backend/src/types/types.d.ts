@@ -5,6 +5,10 @@ export interface UserProps {
     email?: string;
     password?: string;
     photo?: string;
+    role?: string;
+    city?: string;
+    profession?: string;
+    lastActive?: Date;
   };
   token?: string;
 }

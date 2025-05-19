@@ -5,9 +5,8 @@ export const errorHandler = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   console.error(err);
   res.status(500).json({ error: err.message || "Internal Server Error" });
+  return err;
 };
-
-

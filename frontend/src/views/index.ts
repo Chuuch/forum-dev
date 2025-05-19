@@ -4,3 +4,8 @@ export { default as RegisterPage } from "./auth/RegisterPage.tsx";
 export { default as Profile } from "./user/Profile.tsx";
 export { default as Dashboard } from "./Dashboard.tsx";
 export { default as NotFound } from "./NotFound.tsx";
+export { default as News } from "./News.tsx";
+export { default as SmartContracts } from "./SmartContracts.tsx";
+export { default as Contact } from "./Contact.tsx";
+export { default as Blockchain } from "./Blockchain.tsx";
+export { default as About } from "./About.tsx";

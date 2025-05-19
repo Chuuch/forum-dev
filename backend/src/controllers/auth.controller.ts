@@ -2,11 +2,23 @@ import { Request, Response } from "express";
 import { registerUser, loginUser } from "../services/auth.service";
 
 export const register = async (req: Request, res: Response) => {
-  const { username, email, password, photo } = req.body;
+  const { username, email, password } = req.body;
   try {
-    const user = await registerUser(username, email, password, photo);
+    const { user, token } = await registerUser(username, email, password);
 
-    res.status(201).json({ message: "User registered successfully", user });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(201).json({
+      message: "User registered successfully",
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
@@ -26,10 +38,7 @@ export const login = async (req: Request, res: Response) => {
     });
 
     res.json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      photo: user.photo,
+      user,
     });
   } catch (error: any) {
     res.status(401).json({ message: error.message });

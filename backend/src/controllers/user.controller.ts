@@ -59,15 +59,17 @@ export const updateProfile = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const userId = req.user?.id;
-  const { username, email, photo } = req.body;
-  try {
-    // Check for existing user
-    if (!userId) {
-      res.status(404).json({ message: "Unauthorized" });
-    }
+  const userId = req.user!.id;
 
-    const updatedUser = await updateUserService(userId, username, email, photo);
+  if (!userId) {
+    res.status(404).json({ message: "Unauthorized" });
+  }
+
+  const updates = req.body;
+
+  try {
+    const updatedUser = await updateUserService(userId, updates);
+
     res.status(200).json({
       message: "Profile updated successfully",
       user: {
@@ -75,10 +77,14 @@ export const updateProfile = async (
         username: updatedUser?.username,
         email: updatedUser?.email,
         photo: updatedUser?.photo,
+        role: updatedUser?.role,
+        city: updatedUser?.city,
+        profession: updatedUser?.profession,
+        createdAt: updatedUser?.createdAt,
+        updatedAt: updatedUser?.updatedAt,
       },
     });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
-    return;
   }
 };

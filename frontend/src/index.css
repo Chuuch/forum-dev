@@ -11,7 +11,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.7 0.1603 232.94);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -45,7 +45,7 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
+  --primary: oklch(0.7 0.1603 232.94);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -117,16 +117,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Change as needed */
+  background: oklch(0.556 0 0); /* Change as needed */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #4fd1c5; /* Adjust to match your teal theme */
+  background: oklch(0.7 0.1603 232.94); /* Adjust to match your teal theme */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #38b2ac;
+  background: oklch(0.7 0.1603 232.94);
 }
 
 /* .scrollbar-custom {
@@ -141,3 +141,4 @@
     @apply bg-background text-foreground;
   }
 }
+

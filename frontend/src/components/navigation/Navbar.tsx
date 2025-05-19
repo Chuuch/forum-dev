@@ -1,67 +1,118 @@
 import { Link, useLocation } from "react-router-dom";
-import dailyblock from "../../../public/dailyblock.svg";
-import { Button } from "../ui/button";
-import { useAuth } from "../../context/AuthContext";
-import { UserDropdown } from "../ui/user-dropdown";
+// import { UserDropdown } from "../ui/user-dropdown";
 import { ModeToggle } from "../ui/theme-toggle";
+import {
+  Home,
+  Layers,
+  Newspaper,
+  Layers2,
+  Blocks,
+  UsersRound,
+  Unplug,
+} from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
+import { UserDropdown } from "@/features/users/UserDropdown";
 
 const links = [
-  { href: "/", label: "Начало" },
-  { href: "/news", label: "Новини" },
-  { href: "/blockchain", label: "Блокчейн" },
-  { href: "/smart-contracts", label: "смарт контракти" },
-  { href: "/about", label: "за нас" },
-  { href: "/contact", label: "контакти" },
+  { href: "/", label: "Начало", icon: <Home className="w-4 h-4" /> },
+  { href: "/news", label: "Новини", icon: <Newspaper className="w-4 h-4" /> },
+  {
+    href: "/blockchain",
+    label: "Блокчейн",
+    icon: <Blocks className="w-4 h-4" />,
+  },
+  {
+    href: "/smart-contracts",
+    label: "смарт контракти",
+    icon: <Layers2 className="w-4 h-4" />,
+  },
+  { href: "/about", label: "за нас", icon: <UsersRound className="w-4 h-4" /> },
+  { href: "/contact", label: "контакти", icon: <Unplug className="w-4 h-4" /> },
 ];
 
 export default function Navbar() {
-  const { user } = useAuth();
   const location = useLocation();
+  const { user } = useAuthStore();
 
   return (
-    <nav className="w-full flex items-center justify-between max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-900">
+    <nav className="w-full flex sticky top-2 z-50 items-center justify-between max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 border rounded-full bg-gray-200/10 dark:bg-transparent border-gray-200 dark:border-gray-800 transition-all backdrop-blur-lg dark:backdrop-blur-lg">
       <Link to="/">
-        <img src={dailyblock} alt="log" width={50} />
+        <Layers className="text-primary h-12 w-12" />
       </Link>
       <div className="flex items-center justify-between space-x-4 ml-10">
         {links.map((link, index) => (
           <Link
             key={index}
             to={link.href}
-            className={`text-md font-semibold leading-6 uppercase hover:text-teal-500 ${
-              location.pathname === link.href
-                ? "text-teal-500 underline"
-                : "text-gray-500"
-            }`}
+            className={`flex items-center gap-1
+    relative px-2 text-sm font-semibold leading-6 uppercase transition-colors duration-300
+    ${
+      location.pathname === link.href
+        ? "text-primary"
+        : "text-gray-500 hover:text-primary"
+    }
+    after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-primary
+    ${location.pathname === link.href ? "after:scale-x-100" : "after:scale-x-0"}
+    after:origin-left after:transition-transform after:duration-300
+  `}
           >
+            {link.icon}
             {link.label}
           </Link>
         ))}
       </div>
       <div className="flex items-center gap-2">
         {user ? (
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <ModeToggle />
-            <UserDropdown />
+            <UserDropdown
+              email={user.email}
+              photo={user.photo!}
+              username={user.username!}
+              id={user.id}
+            />
           </div>
         ) : (
           <div className="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-2 items-center mx-auto space-x-2">
             <ModeToggle />
-            <Button
-              variant="ghost"
-              asChild
-              className="text-teal-500 dark:hover:bg-teal-600"
+            <Link
+              to="/login"
+              className={`
+    relative px-2 text-sm font-semibold transition-colors duration-300 uppercase
+    ${
+      location.pathname === "/login"
+        ? "text-primary"
+        : "text-gray-500 hover:text-primary"
+    }
+    after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-primary
+    ${location.pathname === "/login" ? "after:scale-x-100" : "after:scale-x-0"}
+    after:origin-left after:transition-transform after:duration-300
+  `}
             >
-              <Link to="/login">Вход</Link>
-            </Button>
-            <div className="flex items-center text-teal-700 h-10">|</div>
-            <Button
-              variant="ghost"
-              asChild
-              className="text-teal-500 dark:hover:bg-teal-600"
+              Вход
+            </Link>
+            <div className="flex items-center text-primary/90 h-10">|</div>
+
+            <Link
+              to="/register"
+              className={`
+    relative px-2 text-sm font-semibold uppercase transition-colors duration-300
+    ${
+      location.pathname === "/register"
+        ? "text-primary"
+        : "text-gray-500 hover:text-primary"
+    }
+    after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-primary
+    ${
+      location.pathname === "/register"
+        ? "after:scale-x-100"
+        : "after:scale-x-0"
+    }
+    after:origin-left after:transition-transform after:duration-300
+  `}
             >
-              <Link to="/register">Създай профил</Link>
-            </Button>
+              Създай акаунт
+            </Link>
           </div>
         )}
       </div>

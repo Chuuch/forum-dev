@@ -15,14 +15,12 @@ export const authMiddleware = async (
   res: Response<any>,
   next: NextFunction
 ): Promise<void> => {
-  const header = req.headers.authorization;
+  const token = req.cookies.token;
 
-  if (!header || !header.startsWith("Bearer ")) {
+  if (!token) {
     res.status(401).json({ message: "Not authorized, token missing" });
     return;
   }
-
-  const token = header.split(" ")[1];
 
   try {
     // Verify the token and extract the payload
@@ -43,12 +41,19 @@ export const authMiddleware = async (
       return;
     }
 
+    user.lastActive = new Date();
+    await user.save();
+
     // Attach user details to req.user
     req.user = {
       id: user.id,
       username: user.username,
       email: user.email,
       photo: user.photo,
+      role: user.role,
+      city: user.city,
+      profession: user.profession,
+      lastActive: user.lastActive,
     };
 
     // Call next to proceed to the next middleware or route handler

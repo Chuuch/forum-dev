@@ -1,8 +1,10 @@
 import { Op } from "sequelize";
-import User from "../models/user.model";
+import User, { UserRole } from "../models/user.model";
 import { UserProps } from "../types/types";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwt";
+
+// TODO: Add OAuth with Google
 
 export const registerUser = async (
   username: string,
@@ -22,19 +24,24 @@ export const registerUser = async (
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const newUser = await User.create({
+  const user = await User.create({
     username,
     email,
     password: hashedPassword,
     photo,
+    role: UserRole.USER,
   });
+
+  const token = generateToken(user.id, user.email, user.role);
+
   return {
     user: {
-      id: newUser.id,
-      username: newUser.username,
-      email: newUser.email,
-      photo: newUser.photo,
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      photo: user.photo,
     },
+    token,
   };
 };
 
@@ -58,7 +65,7 @@ export const loginUser = async (
     throw new Error("Invalid credentials");
   }
 
-  const token = generateToken(user.id);
+  const token = generateToken(user.id, user.role, user.email);
 
   return {
     user: {
@@ -66,6 +73,7 @@ export const loginUser = async (
       username: user.username,
       email: user.email,
       photo: user.photo,
+      role: user.role,
     },
     token,
   };

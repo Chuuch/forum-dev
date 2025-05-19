@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User, { UserAttributes } from "../models/user.model";
 
 export const getUserById = async (userId: string): Promise<User | null> => {
   try {
@@ -26,17 +26,21 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const updateUserService = async (
   userId: string,
-  username: string,
-  email: string,
-  photo: string
+  updates: Partial<UserAttributes>
 ): Promise<User | null> => {
   try {
     const user = await User.findByPk(userId);
     if (!user) {
       throw new Error("User not found");
     }
-    const updatedUser = await user.update({ username, email, photo });
-    return updatedUser;
+    Object.keys(updates).forEach((key) => {
+      if (key in user && updates[key as keyof typeof updates] !== undefined) {
+        // @ts-ignore – we're being dynamic here
+        user[key] = updates[key];
+      }
+    });
+    await user.save();
+    return user;
   } catch (error) {
     console.error("Error updating user profile:", error);
     throw error;

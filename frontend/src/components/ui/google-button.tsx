@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { IoLogoGoogle } from "react-icons/io5";
+import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { Spinner } from "./spinner";
 // import { db } from "../../config/db";
@@ -11,7 +11,7 @@ export default function GoogleLoginButton() {
     setIsLoading(true);
   };
   try {
-    //
+    // TODO: Implement OAuth login with Google.
   } catch (error) {
     console.error("Error logging in with Google:", error);
     setIsLoading(false);
@@ -19,7 +19,7 @@ export default function GoogleLoginButton() {
 
   return (
     <Button
-      className="flex w-full px-4 py-2 cursor-pointer transition-all bg-gray-300 dark:bg-gray-300 hover:bg-gray-200 dark:hover:bg-gray-200"
+      className="flex w-full px-4 py-2 cursor-pointer transition-all border bg-gray-100 dark:bg-gray-300 hover:bg-gray-200/30 dark:hover:bg-gray-200"
       onClick={loginWithGoogle}
       variant="default"
       disabled={isLoading}
@@ -30,7 +30,7 @@ export default function GoogleLoginButton() {
         <>
           <p className="text-black">Продължи с Google</p>
           <p className="text-black">
-            <IoLogoGoogle />
+            <FcGoogle />
           </p>
         </>
       )}

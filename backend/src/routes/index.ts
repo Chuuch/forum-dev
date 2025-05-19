@@ -1,7 +1,7 @@
-export { default as authRouter } from "./authRoutes";
-export { default as userRouter } from "./userRoutes";
-export { default as postRouter } from "./postRoutes";
-export { default as commentRouter } from "./commentRoutes";
-export { default as voteRouter } from "./voteRoutes";
-export { default as notificationRouter } from "./notificationRoutes";
-export { default as newsRouter } from "./newsRoutes";
+export { default as authRouter } from "./auth.route";
+export { default as userRouter } from "./user.route";
+export { default as commentRouter } from "./comment.route";
+export { default as notificationRouter } from "./notification.route";
+export { default as voteRouter } from "./vote.route";
+export { default as postRouter } from "./post.route";
+export { default as uploadRouter } from "./upload.route";

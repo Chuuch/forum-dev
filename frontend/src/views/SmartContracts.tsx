@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function SmartContracts() {
   return (
@@ -6,9 +7,14 @@ export default function SmartContracts() {
       <header>
         <title>TheDailyBlock | Смарт контракти</title>
       </header>
-      <div className="max-w-3xl mx-auto py-12 px-6 text-gray-400">
-        <h1 className="text-4xl font-bold text-teal-400 mb-6">
-          Смарт контракти и одитиране на смарт контракти
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="max-w-5xl mx-auto py-12 px-6 text-gray-400"
+      >
+        <h1 className="text-4xl font-bold text-primary mb-6">
+          Смарт контракти и одити
         </h1>
 
         <p className="text-lg text-gray-400 mb-4">
@@ -18,7 +24,7 @@ export default function SmartContracts() {
           Chain.
         </p>
 
-        <h2 className="text-2xl font-semibold text-blue-400 mt-6">
+        <h2 className="text-2xl font-semibold text-teal-400 mt-6">
           Как работят смарт контрактите?
         </h2>
         <p className="text-gray-400 mb-4">
@@ -69,11 +75,12 @@ export default function SmartContracts() {
             to="https://ethereum.org/en/developers/docs/smart-contracts/"
             className="text-blue-300 underline"
           >
+            {" "}
             официалната документация на Ethereum
           </Link>
           .
         </p>
-      </div>
+      </motion.div>
     </>
   );
 }

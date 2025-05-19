@@ -9,13 +9,13 @@ const links = [
 
 export function Footer() {
   return (
-    <footer className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-900">
+    <footer className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-200 dark:border-gray-800">
       <div className="flex flex-row justify-center mt-10 gap-4 text-md">
         {links.map((link, index) => (
           <Link
             key={index}
             to={link.href}
-            className="text-xs leading-5 text-gray-700 hover:text-teal-500"
+            className="text-xs leading-5 text-gray-700 hover:text-primary"
           >
             {link.label}
           </Link>
